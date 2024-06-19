@@ -1,0 +1,38 @@
+﻿@page "/"
+@using _200555528.Models
+@using _200555528.Data
+@using Microsoft.EntityFrameworkCore
+@inject ApplicationDbContext DbContext
+
+<h3>Student List</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Student ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email Address</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var student in students)
+        {
+            <tr>
+                <td>@student.StudentId</td>
+                <td>@student.FirstName</td>
+                <td>@student.LastName</td>
+                <td>@student.EmailAddress</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    private List<Student> students;
+
+    protected override async Task OnInitializedAsync()
+    {
+        students = await DbContext.Students.ToListAsync();
+    }
+}
